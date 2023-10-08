@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <label>
+                    Вводиться кількість пасажирів:
+                    <input type="number" v-model="passengers" />
+                </label>
+            </div>
+            <hr />
+            <div>Cкільки потрібно автобусів: <span>{{countBus}}</span></div>
+            <div>Cкільки пляшок води: <span>{{countBottlesWater}}</span></div>
+            <div>Cкільки бутербродів: <span>{{countSandwiches}}</span></div>
+        </div>
+        <hr />
+        <script>
+            const { createApp } = Vue
+            const app = createApp({
+                data() {
+                    return {
+                        passengers: null,
+                        busPassengers: 20,
+                        bottlesWater: 2,
+                        sandwiches: 3,
+                    }
+                },
+                computed: {
+                    countBus() {
+                        return Math.ceil(this.passengers / this.busPassengers)
+                    },
+                    countBottlesWater() {
+                        return this.passengers * this.bottlesWater
+                    },
+                    countSandwiches() {
+                        return this.passengers * this.sandwiches
+                    },
+                },
+            })
+
+            app.mount("#app")
+        </script>
+    </body>
+</html>
