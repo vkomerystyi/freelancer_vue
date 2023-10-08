@@ -9,13 +9,32 @@
     </head>
     <body>
         <div class="app">
+            <div>
+                <label
+                    >Вводиться номер місяця:
+                    <input type="number" v-model="numberMonth" />
+                </label>
+            </div>
+            <hr />
+
             <!-- Розмітка -->
         </div>
         <script>
             const { createApp } = Vue
+            const recommendedClothing = [
+                { outerwear: "winter coat" },
+                { outerwear: "light jacket" },
+                { outerwear: "short sleeve shirts" },
+                { outerwear: "waterproof raincoats" },
+            ]
             const app = createApp({
                 data() {
-                    return {}
+                    return {
+                        numberMonth: null,
+                    }
+                },
+                computed: {
+                    /* через find найти потрібні данні і повернути */
                 },
             })
 
