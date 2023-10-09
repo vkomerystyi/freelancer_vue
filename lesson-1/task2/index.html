@@ -8,7 +8,7 @@
         <title>Document</title>
     </head>
     <body>
-        <div class="app">
+        <div id="app">
             <div>
                 <label
                     >Вводиться номер місяця:
@@ -16,16 +16,37 @@
                 </label>
             </div>
             <hr />
-
-            <!-- Розмітка -->
+            <div>{{recommendations.season || ""}}</div>
+            <div>{{recommendations.outerwear || ""}}</div>
+            <div><img :src="recommendations.img" /></div>
         </div>
         <script>
             const { createApp } = Vue
             const recommendedClothing = [
-                { outerwear: "winter coat" },
-                { outerwear: "light jacket" },
-                { outerwear: "short sleeve shirts" },
-                { outerwear: "waterproof raincoats" },
+                {
+                    season: "Зима",
+                    outerwear: "Верхній одяг: зимове пальто, пуховики, шуби.",
+                    img: "../task2/img/1.jpg",
+                    month: [1, 2, 12],
+                },
+                {
+                    season: "Весна",
+                    outerwear: "Верхній одяг: легка куртка або вітровка.",
+                    img: "../task2/img/2.jpg",
+                    month: [3, 4, 5],
+                },
+                {
+                    season: "Літо ",
+                    outerwear: "Верхній одяг: футболки, майки, сорочки з коротким рукавом.",
+                    img: "../task2/img/3.jpg",
+                    month: [6, 7, 8],
+                },
+                {
+                    season: "Осінь ",
+                    outerwear: "Верхній одяг: пальто, демісезонні куртки, водонепроникні плащі.",
+                    img: "../task2/img/4.jpg",
+                    month: [9, 10, 11],
+                },
             ]
             const app = createApp({
                 data() {
@@ -34,7 +55,19 @@
                     }
                 },
                 computed: {
-                    /* через find найти потрібні данні і повернути */
+                    recommendations() {
+                        let num = this.numberMonth
+                        if (num) {
+                            const season = this.getSeason(num)
+                            return season || {}
+                        }
+                        return {}
+                    },
+                },
+                methods: {
+                    getSeason(month) {
+                        return recommendedClothing.find((item) => item.month.includes(month)) || {}
+                    },
                 },
             })
 
