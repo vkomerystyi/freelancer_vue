@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <label>Початок діапазону:<input type="number" v-model="minRange" /></label>
+            </div>
+            <div>
+                <label>Кінець діапазону:<input type="number" v-model="maxRange" /></label>
+            </div>
+            <div><button @click="randomNum">Number</button></div>
+            <hr />
+            <div>{{numRange}}</div>
+        </div>
+        <script>
+            const { createApp } = Vue
+            const app = createApp({
+                data() {
+                    return {
+                        minRange: null,
+                        maxRange: null,
+                        numRange: null,
+                    }
+                },
+                methods: {
+                    randomNum() {
+                        this.numRange = Math.floor(Math.random() * (this.maxRange - this.minRange + 1)) + this.minRange
+                    },
+                },
+            })
+
+            app.mount("#app")
+        </script>
+    </body>
+</html>
