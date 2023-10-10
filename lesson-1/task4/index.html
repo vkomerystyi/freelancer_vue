@@ -8,26 +8,13 @@
         <title>Document</title>
     </head>
     <body>
-        <!-- Задача 4. “Рахунок у банку”
-        Вимоги:
-        1) Спочатку сума дорівнює 0грн. Змінити суму у гривнях можна або зарахуванням на рахунок, або зняттям.
-        2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
-        3) можливість зарахувати суму (контролювати, щоб не була від’ємною)
-        4) можливість зняти (щоб не можна зняти більше ніж є на рахунку)
-        5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків автоматично)
-        
-        При зміні суми :
-        - якщо було зняття, то суму відоражати червоним
-        - якщо було зарахування, то суму відображати зеленим
-        Якщо сума валюти менша за 100 то відображати червоним кольором, інакше 
-        -->
         <div id="app">
-            <div>Суму на рахунку: <span>{{ amountMoney }} грн</span></div>
+            <div :style="color">Суму на рахунку: <span>{{ balanceMoney }} грн</span></div>
             <div>
                 <label
                     >Зарахувати на рахунок:
-                    <input type="number" v-model.lazy="grnSum" />
-                    <button @click="getSum">Зарахувати</button>
+                    <input type="number" v-model.lazy="depositMoney" />
+                    <button @click="addSum">Зарахувати</button>
                 </label>
             </div>
             <div>
@@ -37,12 +24,11 @@
                     <button @click="removeSum">Зняти</button>
                 </label>
             </div>
-            <div>
-                Відсотки за обслуговування:<span><!--  -->грн</span>
-            </div>
+
+            <div>Відсотки:<span> {{ interest }} грн</span></div>
             <hr />
-            <div>Сума у доларах:<span> $ {{ dollarSum }}</span></div>
-            <div>Сума у євро:<span> Є {{ euroSum }}</span></div>
+            <div>Сума у доларах:<span> $ {{ dollarRate }}</span></div>
+            <div>Сума у євро:<span> Є {{ euroRate }}</span></div>
         </div>
         <script>
             const { createApp } = Vue
@@ -50,33 +36,44 @@
             const app = createApp({
                 data() {
                     return {
-                        amountMoney: 0,
-                        removeMoney: null,
-                        dollarRate: 38,
-                        euroRate: 40,
-                        grnSum: null,
+                        balanceMoney: 0,
+                        depositMoney: 0,
+                        removeMoney: 0,
+                        interest: 0,
+                        color: "color:black",
                     }
                 },
                 computed: {
-                    //  2) Сума автоматично переводиться у долари та євро (фіксований курс задається у data).
-                    dollarSum() {
-                        return (this.amountMoney / this.dollarRate).toFixed(2)
+                    dollarRate() {
+                        return this.balanceMoney / 38
                     },
-                    euroSum() {
-                        return (this.amountMoney / this.euroRate).toFixed(2)
+                    euroRate() {
+                        return this.balanceMoney / 40
                     },
-
-                    // 5) при виконанні зняття і зарахування коштів вираховувати 3% від суми (відображати кількість відсотків автоматично)
-                    // вираховувати 3%
                 },
                 methods: {
-                    getSum() {
-                        this.amountMoney += this.grnSum
-                        this.grnSum = null
+                    addSum() {
+                        if (this.depositMoney > 0) {
+                            this.balanceMoney += this.depositMoney
+                            this.interest = this.depositMoney * 0.03
+                            this.balanceMoney -= this.interest
+                            this.depositMoney = 0
+                            this.color = "color:green"
+                            if (this.balanceMoney <= 100) {
+                                this.color = "color:red"
+                            } else {
+                                this.color = "color:green"
+                            }
+                        }
                     },
                     removeSum() {
-                        this.amountMoney -= this.removeMoney
-                        this.removeMoney = null
+                        if (this.removeMoney <= this.balanceMoney) {
+                            this.balanceMoney -= this.removeMoney
+                            this.interest = this.removeMoney * 0.03
+                            this.balanceMoney -= this.interest
+                            this.removeMoney = 0
+                            this.color = "color:red"
+                        }
                     },
                 },
             })
