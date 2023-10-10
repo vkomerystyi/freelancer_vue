@@ -1,32 +1,65 @@
-/* Задача 1. Вводиться кількість пасажирів. 
-Вивести:
-скільки потрібно автобусів (кожен автобус на 20 місць)
-скільки пляшок води (кожному пасажиру 2 пляшки)
-скільки бутербродів (кожному пасажиру 3 бутерброди)
- */
-const { createApp } = Vue
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+        <title>Document</title>
+    </head>
+    <body>
+        <div id="app">
+            <div>
+                <label> Login: <input type="text" v-model="name" /></label>
+            </div>
+            <div>
+                <label> Password: <input type="password" v-model="pass" /></label>
+            </div>
+            <div>
+                <button @click="userCheck">Go</button>
+            </div>
+            <hr />
+            <div>{{ mess }}</div>
+        </div>
 
-const app = createApp({
-    data() {
-        return {
-            passengers: null,
-            busPassengers: 20,
-            bottlesWater: 2,
-            sandwiches: 3,
-        }
-    },
-
-    computed: {
-        countBus() {
-            return Math.ceil(this.passengers / this.busPassengers)
-        },
-        countBottlesWater() {
-            return this.passengers * this.bottlesWater
-        },
-        countSandwiches() {
-            return this.passengers * this.sandwiches
-        },
-    },
-})
-
-app.mount("#app")
+        <script>
+            /* Задача 5. Додаток містить масив об’єктів (логін, пароль) --  інсуючі логіни і паролі.
+            Користувач вводить логін і пароль, а програма повідомляє чи може користувач бути авторизованим (чи є він одним з масиву).
+             */
+            const { createApp } = Vue
+            const adminUsers = [
+                {
+                    name: "user1",
+                    pass: "1234",
+                },
+                {
+                    name: "user2",
+                    pass: "5678",
+                },
+                {
+                    name: "user3",
+                    pass: "4321",
+                },
+            ]
+            const app = createApp({
+                data() {
+                    return {
+                        name: null,
+                        pass: null,
+                        mess: "Вхід",
+                    }
+                },
+                methods: {
+                    userCheck() {
+                        const admin = adminUsers.find((el) => el.name === this.name && el.pass === this.pass)
+                        if (admin) {
+                            this.mess = "Успішний вхід"
+                        } else {
+                            this.mess = "Не вірні логін і пароль"
+                        }
+                    },
+                },
+            })
+            app.mount("app")
+        </script>
+    </body>
+</html>
