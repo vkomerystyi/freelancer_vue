@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Урок №2</title>
+    <style>
+      .trueLogin {
+        background-color: green;
+        color: white;
+        padding: 10px;
+      }
+      .ivanLogin {
+        background-color: blue;
+        color: white;
+        padding: 10px;
+      }
+      .anotherLogin {
+        background-color: red;
+        color: white;
+        padding: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <label>Login: <input type="text" v-model="userLogin" /></label>
+      </div>
+      <div>
+        <label>Password: <input type="number" v-model="userPass" /></label>
+      </div>
+      <button @click="addForm">Go</button>
+      <hr />
+      <div
+        :class="{ 
+          trueLogin: isGreen, 
+          ivanLogin: isBlue,
+          anotherLogin: isRed
+       }"
+      >
+        {{ mess }}
+      </div>
+      <img :src="imgUrl" />
+    </div>
+
+    <script>
+      const { createApp } = Vue
+      const urlAdmin = 'img/free-sticker-panda.png'
+      const adminList = [
+        {
+          login: 'admin1',
+          pass: 1234,
+        },
+        {
+          login: 'admin2',
+          pass: 5678,
+        },
+        {
+          login: 'admin3',
+          pass: 9012,
+        },
+      ]
+
+      const app = createApp({
+        data() {
+          return {
+            userLogin: null,
+            userPass: null,
+            mess: 'Вхід',
+            imgUrl: null,
+            isGreen: false,
+            isBlue: false,
+            isRed: false,
+          }
+        },
+        methods: {
+          checkCredentials() {
+            if (
+              this.userLogin === null ||
+              this.userLogin === undefined ||
+              this.userPass === null ||
+              this.userPass === undefined
+            ) {
+              return null
+            }
+
+            const user = adminList.find((el) => el.login === this.userLogin && el.pass == this.userPass)
+            return user
+          },
+          addForm() {
+            const user = this.checkCredentials()
+            if (user) {
+              this.imgUrl = urlAdmin
+              this.mess = 'Успіх, Ви адмін - ' + this.userLogin
+              this.isGreen = true
+              this.isBlue = false
+            } else if (this.userLogin === 'Іван') {
+              this.mess = 'Не можна використовувати кирилицю для Логіна'
+              this.isGreen = false
+              this.isBlue = true
+              this.isRed = false
+              this.imgUrl = ''
+            } else {
+              this.mess = 'Такого користувача не існує в системі'
+              this.isGreen = false
+              this.isBlue = false
+              this.isRed = true
+              this.imgUrl = ''
+            }
+            this.userLogin = null
+            this.userPass = null
+          },
+        },
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>
