@@ -17,7 +17,9 @@
     <div id="app">
       <div>
         Зображення слова:
-        <img src="" alt="" />
+        <br />
+        <img :src="getRandomWord.imgPath" alt="img" />
+        <div>{{ getRandomWord.translation }}</div>
         <div>Слово українською:</div>
         <div>
           <label
@@ -73,7 +75,21 @@
         },
       ]
 
-      const app = createApp({})
+      const app = createApp({
+        computed: {
+          getRandomWord() {
+            const randIndex = Math.floor(Math.random() * imgList.length)
+            return imgList[randIndex]
+          },
+        },
+        methods: {
+          getTranslation() {},
+          /* створити метод  на інпут та реактивне зн 
+              перебрати массив foreath або find і створити новий масив в якому ми перевірим слово яке ввели із значення в масиві
+              якщо так виведем наше повідомлення якщо ні то не вірно
+          */
+        },
+      })
       app.mount('#app')
     </script>
   </body>
