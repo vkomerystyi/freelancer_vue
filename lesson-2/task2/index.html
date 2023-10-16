@@ -14,13 +14,14 @@
         <option>Бізнес</option>
         <option>Економ</option>
       </select>
-      <br />
+      <hr />
       <template v-if="isSelectBusiness">
         <select v-model="newspaperCognac">
           <option disabled value="">Будь ласка, оберіть варіант</option>
           <option>Газета</option>
           <option>Коньяк</option>
         </select>
+
         <div
           v-if="isNewspaperCognac"
           :style="{backgroundImage: imgAirplaneСabin.backgroundImage, backgroundRepeat: 'no-repeat', 
@@ -31,7 +32,6 @@
             <div>
               <input type="radio" id="one" value="Один" v-model="picked" />
               <label for="one">Так</label>
-
               <input type="radio" id="two" value="Два" v-model="picked" />
               <label for="two">Ні</label>
             </div>
@@ -39,7 +39,6 @@
         </div>
       </template>
       <template v-if="isSelectEconomy">
-        <hr />
         <div
           :style="{backgroundImage: imgSkyClouds.backgroundImage, backgroundRepeat: 'no-repeat', 
         height: '300px', width: '300px'}"

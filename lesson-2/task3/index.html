@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <!-- Задача 3. 
+      Елемент тренажера англійської. 
+      Виводимо зображення елемента і слово. 
+      Користувач вводить відповідь. 
+      Якщо вірно – відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента), 
+      якщо ні - то відтворюємо фразу «Невірно, спробуйте ще раз» (і додаємо червону рамку).
+ -->
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        Зображення слова:
+        <img src="" alt="" />
+        <div>Слово українською:</div>
+        <div>
+          <label
+            >Переклад:
+            <input type="text" />
+          </label>
+        </div>
+        <div>Відтворюємо фразу</div>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue
+      const imgList = [
+        {
+          word: 'book',
+          translation: 'книга',
+          imgPath: 'img/book.jpg',
+        },
+        {
+          word: 'car',
+          translation: 'машина',
+          imgPath: 'img/car.jpg',
+        },
+        {
+          word: 'cat',
+          translation: 'кіт',
+          imgPath: 'img/cat.jpg',
+        },
+        {
+          word: 'dog',
+          translation: 'собака',
+          imgPath: 'img/dog.jpg',
+        },
+        {
+          word: 'family',
+          translation: "сім'я",
+          imgPath: 'img/family.jpg',
+        },
+        {
+          word: 'happy',
+          translation: 'щасливий',
+          imgPath: 'img/happy.jpg',
+        },
+        {
+          word: 'house',
+          translation: 'будинок',
+          imgPath: 'img/house.jpg',
+        },
+        {
+          word: 'sun',
+          translation: 'сонце',
+          imgPath: 'img/book.jpg',
+        },
+      ]
+
+      const app = createApp({})
+      app.mount('#app')
+    </script>
+  </body>
+</html>
