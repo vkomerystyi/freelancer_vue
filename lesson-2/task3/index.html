@@ -4,30 +4,35 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <title>Document</title>
-    <!-- Задача 3. 
-      Елемент тренажера англійської. 
-      Виводимо зображення елемента і слово. 
-      Користувач вводить відповідь. 
-      Якщо вірно – відтворюємо фразу «Добре. Молодець!» (і додаємо зелену рамку до елемента), 
-      якщо ні - то відтворюємо фразу «Невірно, спробуйте ще раз» (і додаємо червону рамку).
- -->
+    <title>Урок №2</title>
+    <style>
+      .wrap {
+        width: 300px;
+        height: 300px;
+      }
+      .green {
+        border: 2px solid green;
+      }
+      .red {
+        border: 2px solid red;
+      }
+    </style>
   </head>
   <body>
     <div id="app">
-      <div>
+      <div :class="answer" class="wrap">
         Зображення слова:
         <br />
         <img :src="getRandomWord.imgPath" alt="img" />
+        <div>Слово :</div>
         <div>{{ getRandomWord.translation }}</div>
-        <div>Слово українською:</div>
         <div>
           <label
             >Переклад:
-            <input type="text" />
+            <input type="text" v-model="userTranslated" @change="getTranslation" />
           </label>
         </div>
-        <div>Відтворюємо фразу</div>
+        <div>{{ mess }}</div>
       </div>
     </div>
     <script>
@@ -71,11 +76,18 @@
         {
           word: 'sun',
           translation: 'сонце',
-          imgPath: 'img/book.jpg',
+          imgPath: 'img/sun.jpg',
         },
       ]
 
       const app = createApp({
+        data() {
+          return {
+            userTranslated: '',
+            answer: '',
+            mess: '',
+          }
+        },
         computed: {
           getRandomWord() {
             const randIndex = Math.floor(Math.random() * imgList.length)
@@ -83,11 +95,22 @@
           },
         },
         methods: {
-          getTranslation() {},
-          /* створити метод  на інпут та реактивне зн 
-              перебрати массив foreath або find і створити новий масив в якому ми перевірим слово яке ввели із значення в масиві
-              якщо так виведем наше повідомлення якщо ні то не вірно
-          */
+          getTranslation() {
+            let found = false
+            imgList.forEach((el) => {
+              if (el.word === this.userTranslated) {
+                found = true
+              }
+            })
+            console.log(found)
+            if (found) {
+              this.mess = '«Добре. Молодець!»'
+              this.answer = 'green'
+            } else {
+              this.mess = '«Невірно, спробуйте ще раз»'
+              this.answer = 'red'
+            }
+          },
         },
       })
       app.mount('#app')

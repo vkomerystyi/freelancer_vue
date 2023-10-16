@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Урок №2</title>
+    <style>
+      table {
+        border: 2px solid black;
+        border-collapse: collapse;
+        margin: 10px;
+      }
+      td {
+        border: 1px solid black;
+        padding: 10px;
+      }
+    </style>
+    <!-- Задача 6. 
+      На кухню поступають замовлення. 
+      Спочатку ми додаємо їх у список “Очікують на виконання”, 
+      якщо повар береться робити — замовлення переходить у список “Виконуються”,   
+      якщо замовлення виконано — переходить у список “Готові до виносу”. 
+      Якщо натиснути на “Подано” - страва зникає з таблиці -->
+  </head>
+  <body>
+    <div id="app">
+      <div>
+        <label>Нова замовлена страва: <input type="text" /> <button>Додати</button> </label>
+      </div>
+      <div>
+        <table class="table">
+          <tr>
+            <td>Очікування на виконання</td>
+            <td>Виконується</td>
+            <td>Готові до виносу</td>
+          </tr>
+          <tr>
+            <td>1 страва <button>готувати</button></td>
+            <td>1 страва <button>приготовлено</button></td>
+            <td>1 страва <button>продано</button></td>
+          </tr>
+          <tr>
+            <td>2 страва</td>
+            <td>2 страва</td>
+            <td>2 страва</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue
+      const app = createApp({})
+      app.mount('#app')
+    </script>
+  </body>
+</html>

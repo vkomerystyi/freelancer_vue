@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Урок №2</title>
+    <style>
+      .block {
+        margin-bottom: 30px;
+        max-width: 600px;
+        margin-top: 0;
+      }
+      img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin: 0 10px 0 0;
+      }
+      .tittle {
+        display: flex;
+        gap: 8px;
+        margin: 0 0 10px 0;
+      }
+      .text > a {
+        color: blue;
+        font-size: 24px;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div v-for="(data, index) in dataList" :key="index" class="block">
+        <div class="tittle">
+          <a :href="data.url"><img :src="data.img" alt="img" /></a>
+          <div>
+            <p>{{data.name}}</p>
+            <a :href="data.url">https://ua.vuejs.org/</a>
+          </div>
+        </div>
+        <div class="text">
+          <a :href="data.url">{{data.title}}</a>
+          <p>{{data.description}}</p>
+        </div>
+      </div>
+    </div>
+    <script>
+      const { createApp } = Vue
+
+      const arrayData = [
+        {
+          name: 'Vue.js',
+          title: 'Швидкий старт',
+          url: 'https://ua.vuejs.org/guide/quick-start.html',
+          img: 'https://assets.bitdegree.org/online-learning-platforms/storage/media/2019/11/Screenshot-2019-11-07-at-13.18.31-1-300x252.png',
+          description:
+            "Спробуйте Vue онлайн. У цій секції ми розповімо, як створити Vue одно-сторінковий додаток на вашому локальному комп'ютері. Створений проєкт буде використовувати збірку, яка заснована на Vite, і дозволяє використовувати одно-файлові компоненти Vue (SFC)",
+        },
+        {
+          name: 'Vue.js',
+          title: 'Створення додатку Vue',
+          img: 'https://assets.bitdegree.org/online-learning-platforms/storage/media/2019/11/Screenshot-2019-11-07-at-13.18.31-1-300x252.png',
+          url: 'https://ua.vuejs.org/guide/essentials/application.html#app-configurations',
+          description:
+            'Кожен додаток Vue починається зі створення нового екземпляру додатку функцією createApp. Обʼєкт, який ми передаємо в createApp є, по суті, компонентом. Кожен додаток вимагає "кореневого компонента", який може містити інші дочірні компоненти.',
+        },
+        {
+          name: 'Vue.js',
+          title: 'Синтаксис шаблона',
+          img: 'https://assets.bitdegree.org/online-learning-platforms/storage/media/2019/11/Screenshot-2019-11-07-at-13.18.31-1-300x252.png',
+          url: 'https://ua.vuejs.org/guide/essentials/template-syntax.html',
+          description:
+            'Vue використовує синтаксис шаблона на основі HTML, який дозволяє нам декларативно привʼязати відрендерений DOM до даних екземпляра компонента нижчого рівня. Усі шаблони Vue синтаксично коректні HTML, які можуть бути проаналізовані браузерами, сумісними зі специфікаціями, і парсерами HTML.',
+        },
+        {
+          name: 'Vue.js',
+          title: 'Основи реактивності',
+          img: 'https://assets.bitdegree.org/online-learning-platforms/storage/media/2019/11/Screenshot-2019-11-07-at-13.18.31-1-300x252.png',
+          url: 'https://ua.vuejs.org/guide/essentials/reactivity-fundamentals.html',
+          description:
+            'У Options API ми використовуємо опцію data, щоб оголосити реактивний стан компонента. Значення параметра має бути функцією, яка повертає об’єкт. Vue викличе функцію під час створення нового екземпляра компонента та обгорне повернутий об’єкт у свою систему реактивності.',
+        },
+      ]
+
+      const app = createApp({
+        computed: {
+          dataList() {
+            return arrayData
+          },
+        },
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>
