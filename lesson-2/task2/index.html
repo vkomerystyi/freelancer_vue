@@ -6,11 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Урок №2</title>
-    <!--     Задача 2.
-             З випадаючого списку вибираємо клас квитка у літаку. Якщо
-             1) бізнес -  виводимо елементи для вибору газети та коньяку (якщо вибрано коньяк, то запропонувати закуску (так/ні)), на фоні зображення бізнес кают
-             2) економ – виводимо елементи для вибору типу пива і чипсів, на фоні хмарки.
-       -->
   </head>
   <body>
     <div id="app">
@@ -19,8 +14,42 @@
         <option>Бізнес</option>
         <option>Економ</option>
       </select>
-      <template v-if="selected === 'Бізнес'">
-        <div>{{selected}}</div>
+      <br />
+      <template v-if="isSelectBusiness">
+        <select v-model="newspaperCognac">
+          <option disabled value="">Будь ласка, оберіть варіант</option>
+          <option>Газета</option>
+          <option>Коньяк</option>
+        </select>
+        <div
+          v-if="isNewspaperCognac"
+          :style="{backgroundImage: imgAirplaneСabin.backgroundImage, backgroundRepeat: 'no-repeat', 
+          height: '300px', width: '300px'}"
+        >
+          <div>
+            <div>Виберіть закуску</div>
+            <div>
+              <input type="radio" id="one" value="Один" v-model="picked" />
+              <label for="one">Так</label>
+
+              <input type="radio" id="two" value="Два" v-model="picked" />
+              <label for="two">Ні</label>
+            </div>
+          </div>
+        </div>
+      </template>
+      <template v-if="isSelectEconomy">
+        <hr />
+        <div
+          :style="{backgroundImage: imgSkyClouds.backgroundImage, backgroundRepeat: 'no-repeat', 
+        height: '300px', width: '300px'}"
+        >
+          <input type="checkbox" id="beer" value="Пиво" v-model="beerСhips" />
+          <label for="beer">Пиво</label>
+
+          <input type="checkbox" id="chips" value="Чипси" v-model="beerСhips" />
+          <label for="chips">Чипси</label>
+        </div>
       </template>
     </div>
     <script>
@@ -30,7 +59,27 @@
         data() {
           return {
             selected: '',
+            newspaperCognac: '',
+            beerСhips: [],
+            imgAirplaneСabin: {
+              backgroundImage: "url('img/business.jpg')",
+            },
+            imgSkyClouds: {
+              backgroundImage: "url('img/sky.jpg')",
+            },
+            picked: null,
           }
+        },
+        computed: {
+          isSelectBusiness() {
+            return this.selected === 'Бізнес'
+          },
+          isSelectEconomy() {
+            return this.selected === 'Економ'
+          },
+          isNewspaperCognac() {
+            return this.newspaperCognac === 'Коньяк'
+          },
         },
       })
       app.mount('#app')
