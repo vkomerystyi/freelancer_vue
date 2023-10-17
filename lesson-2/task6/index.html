@@ -7,14 +7,26 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Урок №2</title>
     <style>
-      table {
-        border: 2px solid black;
-        border-collapse: collapse;
-        margin: 10px;
+      .menu {
+        display: flex;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        gap: 20px;
       }
-      td {
-        border: 1px solid black;
+      .menu-item {
+        border: 2px solid black;
+        flex: 1;
+        max-width: 300px;
+      }
+      .title {
         padding: 10px;
+        flex: 1;
+      }
+      .mess {
+        padding: 10px;
+        flex: 1;
+        display: flex;
+        justify-content: space-between;
       }
     </style>
     <!-- Задача 6. 
@@ -27,31 +39,64 @@
   <body>
     <div id="app">
       <div>
-        <label>Нова замовлена страва: <input type="text" /> <button>Додати</button> </label>
+        <label
+          >Нова замовлена страва: <input type="text" v-model="prodTitle" />
+          <button @click="onProductAdd">Додати</button>
+        </label>
       </div>
-      <div>
-        <table class="table">
-          <tr>
-            <td>Очікування на виконання</td>
-            <td>Виконується</td>
-            <td>Готові до виносу</td>
-          </tr>
-          <tr>
-            <td>1 страва <button>готувати</button></td>
-            <td>1 страва <button>приготовлено</button></td>
-            <td>1 страва <button>продано</button></td>
-          </tr>
-          <tr>
-            <td>2 страва</td>
-            <td>2 страва</td>
-            <td>2 страва</td>
-          </tr>
-        </table>
+      <hr />
+      <div class="menu">
+        <div class="menu-item">
+          <div class="title">Очікують на виконання</div>
+          <div class="mess" v-for="(prod, index) in waitingList" :key="index">
+            {{prod.title}} <button @click="executed(index)">готувати</button>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="title">Виконуються</div>
+          <div class="mess" v-for="(prod, index) in processingList" :key="index">
+            {{prod.title}} <button @click="readyOut(index)">приготовлено</button>
+          </div>
+        </div>
+        <div class="menu-item">
+          <div class="title">Готові до виносу</div>
+          <div class="mess" v-for="(prod, index) in completedList">
+            {{prod.title}} <button @click="submitted(index)">подано</button>
+          </div>
+        </div>
       </div>
     </div>
     <script>
       const { createApp } = Vue
-      const app = createApp({})
+      const app = createApp({
+        data() {
+          return {
+            prodTitle: null,
+            waitingList: [],
+            processingList: [],
+            completedList: [],
+          }
+        },
+        methods: {
+          onProductAdd() {
+            this.waitingList.push({ title: this.prodTitle })
+            this.prodTitle = null
+          },
+          executed(index) {
+            let elem = this.waitingList[index]
+            this.processingList.push(elem)
+            this.waitingList.splice(index, 1)
+          },
+          readyOut(index) {
+            let elem = this.processingList[index]
+            this.completedList.push(elem)
+            this.processingList.splice(index, 1)
+          },
+          submitted(index) {
+            this.completedList.splice(index, 1)
+          },
+        },
+      })
       app.mount('#app')
     </script>
   </body>

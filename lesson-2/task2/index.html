@@ -9,13 +9,16 @@
   </head>
   <body>
     <div id="app">
+      <div>З випадаючого списку вибираємо клас квитка у літаку:</div>
       <select v-model="selected">
         <option disabled value="">Будь ласка, оберіть варіант</option>
         <option>Бізнес</option>
         <option>Економ</option>
       </select>
       <hr />
+
       <template v-if="isSelectBusiness">
+        <div>Виберіть вариант:</div>
         <select v-model="newspaperCognac">
           <option disabled value="">Будь ласка, оберіть варіант</option>
           <option>Газета</option>

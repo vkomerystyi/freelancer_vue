@@ -18,7 +18,7 @@
         border-radius: 50%;
         margin: 0 10px 0 0;
       }
-      .tittle {
+      .title {
         display: flex;
         gap: 8px;
         margin: 0 0 10px 0;
@@ -33,7 +33,7 @@
   <body>
     <div id="app">
       <div v-for="(data, index) in dataList" :key="index" class="block">
-        <div class="tittle">
+        <div class="title">
           <a :href="data.url"><img :src="data.img" alt="img" /></a>
           <div>
             <p>{{data.name}}</p>
