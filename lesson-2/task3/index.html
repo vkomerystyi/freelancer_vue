@@ -8,13 +8,16 @@
     <style>
       .wrap {
         width: 300px;
-        height: 300px;
+        height: 100%;
       }
       .green {
         border: 2px solid green;
       }
       .red {
         border: 2px solid red;
+      }
+      button {
+        margin: 10px;
       }
     </style>
   </head>
@@ -29,8 +32,9 @@
         <div>
           <label
             >Переклад:
-            <input type="text" v-model="userTranslated" @change="getTranslation" />
+            <input type="text" v-model="userTranslated" />
           </label>
+          <button @click="getTranslation">Перевірити</button>
         </div>
         <div>{{ mess }}</div>
       </div>
@@ -98,11 +102,12 @@
           getTranslation() {
             let found = false
             imgList.forEach((el) => {
-              if (el.word === this.userTranslated) {
+              console.log(this.getRandomWord.word)
+              if (el.word === this.userTranslated && this.userTranslated === this.getRandomWord.word) {
                 found = true
               }
             })
-            console.log(found)
+
             if (found) {
               this.mess = '«Добре. Молодець!»'
               this.answer = 'green'
