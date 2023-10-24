@@ -7,13 +7,16 @@
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Document</title>
     <style>
-      body {
+      .wrapper {
         height: 100vh;
+      }
+      .box {
+        padding: 10px;
       }
       .white {
         background-color: white;
       }
-      .blu {
+      .blue {
         background-color: blue;
       }
       .green {
@@ -26,13 +29,31 @@
   </head>
   <body>
     <div id="app">
-      <div>
-        <label> Температура: <input type="number" v-model="temperature" /> </label>
+      <div class="wrapper" :class="{[tempClass]:temp}">
+        <div class="box">
+          <label> Температура: <input type="number" v-model="temp" /> </label>
+        </div>
       </div>
     </div>
     <script>
       const { createApp } = Vue
-      const app = createApp({})
+      const app = createApp({
+        data() {
+          return {
+            temp: null,
+          }
+        },
+        computed: {
+          tempClass() {
+            let resClass
+            if (this.temp < 0) resClass = 'white'
+            else if (this.temp < 10) resClass = 'blue'
+            else if (this.temp < 22) resClass = 'green'
+            else resClass = 'red'
+            return resClass
+          },
+        },
+      })
       app.mount('#app')
     </script>
   </body>
