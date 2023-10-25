@@ -5,9 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <title>Document</title>
+    <style>
+      .low {
+        background-color: orange;
+      }
+      .normal {
+        background-color: green;
+      }
+      .danger {
+        background-color: red;
+      }
+    </style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div>
+        <label> Limit <input type="number" /> </label>
+      </div>
+      <div>
+        <label> Auto speed <input type="number" /> </label>
+      </div>
+      <div></div>
+      <div></div>
+    </div>
     <script>
       const { createApp } = Vue
       const app = createApp({}).mount('#app')
