@@ -19,18 +19,68 @@
   </head>
   <body>
     <div id="app">
-      <div>
-        <label> Limit <input type="number" /> </label>
+      <div :class="{[currentClass]:isDataValid}">
+        <label> Limit <input type="number" v-model="limitSpeed" /> </label>
+
+        <label> Auto speed <input type="number" v-model="currentSpeed" :disabled="!limitSpeed" /> </label>
       </div>
-      <div>
-        <label> Auto speed <input type="number" /> </label>
-      </div>
-      <div></div>
+      <div v-show="isAlertVisible">Увага</div>
       <div></div>
     </div>
     <script>
       const { createApp } = Vue
-      const app = createApp({}).mount('#app')
+      const app = createApp({
+        data() {
+          return {
+            limitSpeed: null,
+            currentSpeedValue: null,
+            isAlertVisible: false,
+            intervalId: null,
+          }
+        },
+        computed: {
+          currentSpeed: {
+            get() {
+              return this.currentSpeedValue
+            },
+            set(newVal) {
+              this.currentSpeedValue = newVal
+              if (this.currentSpeedRate > 90) {
+                this.startDisplayAlert()
+              } else this.stopDisplayAlert()
+            },
+          },
+          isDataValid() {
+            return this.limitSpeed && this.currentSpeed
+          },
+          currentSpeedRate() {
+            return (this.currentSpeed * 100) / this.limitSpeed
+          },
+          currentClass() {
+            let currentClass = null
+            if (this.currentSpeedRate < 50) currentClass = 'low'
+            else if (this.currentSpeedRate < 100) currentClass = 'normal'
+            else currentClass = 'danger'
+            return currentClass
+          },
+        },
+        methods: {
+          startDisplayAlert() {
+            if (!this.intervalId) {
+              this.intervalId = setInterval(() => {
+                this.isAlertVisible = !this.isAlertVisible
+              }, 1000)
+            }
+          },
+          stopDisplayAlert() {
+            if (this.intervalId) {
+              clearInterval(this.intervalId)
+              this.isAlertVisible = false
+              this.intervalId = null
+            }
+          },
+        },
+      }).mount('#app')
     </script>
   </body>
 </html>
