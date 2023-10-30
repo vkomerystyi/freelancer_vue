@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <title>Document</title>
+    <style>
+      .cell {
+        width: 40px;
+        height: 40px;
+        border: 2px solid black;
+        margin: 10px;
+        display: inline-block;
+        cursor: pointer;
+      }
+      .closed {
+        background-color: gray;
+      }
+      .mine {
+        background-color: red;
+      }
+      .free {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div
+        v-for="(cell, index) in gameField"
+        :key="index"
+        class="cell"
+        :class="{'closed':cell.isClose,
+                'mine':!cell.isClose && cell.hasMine,
+                'free':!cell.isClose && !cell.hasMine}"
+        @click="onClick(index)"
+      ></div>
+    </div>
+    <script>
+      const { createApp } = Vue
+      const app = createApp({
+        data() {
+          return {
+            gameField: [
+              { hasMine: 1, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 1, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 1, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 0, isClose: true },
+              { hasMine: 1, isClose: true },
+            ],
+          }
+        },
+        methods: {
+          onClick(index) {
+            this.gameField[index].isClose = false
+            if (this.gameField[index].hasMine === 0) {
+              for (let i = index + 1; i < this.gameField.length; i++) {
+                if (this.gameField[i].hasMine === 0) {
+                  this.gameField[i].isClose = false
+                } else {
+                  break
+                }
+              }
+              for (let i = index - 1; i >= 0; i--) {
+                if (this.gameField[i].hasMine === 0) {
+                  this.gameField[i].isClose = false
+                } else {
+                  break
+                }
+              }
+            }
+          },
+        },
+      })
+      app.mount('#app')
+    </script>
+  </body>
+</html>
