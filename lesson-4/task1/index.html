@@ -8,11 +8,39 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div>
+        <label>
+          Введіть вік:
+          <input type="number" ref="age" v-model="age" />
+        </label>
+      </div>
+      <button @click="onStart">Go</button>
+
+      <div v-if="message">{{message}}</div>
+    </div>
     <script>
       const { createApp } = Vue
 
-      const app = createApp({})
+      const app = createApp({
+        data() {
+          return {
+            age: null,
+            message: null,
+          }
+        },
+        methods: {
+          onStart() {
+            if (!this.age) {
+              this.$refs.age.focus()
+              this.message = 'Введіть вік'
+            } else {
+              if (this.age < 18) this.message = ' Вхід заборонено'
+              else this.message = 'Вхід дозволено'
+            }
+          },
+        },
+      })
 
       app.mount('#app')
     </script>

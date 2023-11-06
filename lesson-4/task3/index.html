@@ -8,10 +8,43 @@
     <style></style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div v-for="i in 3" :key="i">
+        <label>
+          Оцінка № {{i}} :
+          <input type="number" ref="mark" v-model="mark[i-1]" />
+        </label>
+      </div>
+      <button @click="getAverage">Знайти мінімальну оцінку</button>
+      <div v-if="message">{{message}}</div>
+    </div>
     <script>
       const { createApp } = Vue
-      const app = createApp({}).mount('#app')
+      const app = createApp({
+        data() {
+          return {
+            mark: [],
+            message: null,
+          }
+        },
+        methods: {
+          getAverage() {
+            let notValidInputIndex = -1
+            for (let i = 0; i < 3; i++) {
+              if (!this.mark[i]) {
+                notValidInputIndex = i
+                break
+              }
+            }
+            if (notValidInputIndex !== -1) {
+              this.$refs.mark[notValidInputIndex].focus()
+              this.message = `Задайте оцінку № ${notValidInputIndex + 1}`
+            } else {
+              this.message = `Найменша оцінка: ${Math.min(...this.mark)}`
+            }
+          },
+        },
+      }).mount('#app')
     </script>
   </body>
 </html>
