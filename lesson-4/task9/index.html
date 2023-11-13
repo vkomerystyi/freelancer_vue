@@ -8,10 +8,35 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div>
+        <label>Введіть ім'я: <input type="text" v-model="user.name" /></label>
+      </div>
+
+      <div>
+        <label>Введіть вік: <input type="number" v-model="user.age" /></label>
+      </div>
+    </div>
     <script>
       const { createApp } = Vue
-      createApp({}).mount('#app')
+      createApp({
+        data() {
+          return {
+            user: {},
+          }
+        },
+        watch: {
+          user: {
+            handler(newVal, oldVal) {
+              localStorage.setItem('user', JSON.stringify(this.user))
+            },
+            deep: true,
+          },
+        },
+        mounted() {
+          this.userName = JSON.parse(localStorage.getItem('user'))
+        },
+      }).mount('#app')
     </script>
   </body>
 </html>
