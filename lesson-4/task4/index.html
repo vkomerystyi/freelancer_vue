@@ -9,10 +9,29 @@
     <style></style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <h1>Поточний час</h1>
+      <h2>{{currentTime}}</h2>
+    </div>
     <script>
       const { createApp } = Vue
-      const app = createApp({})
+      const app = createApp({
+        data() {
+          return {
+            currentTime: null,
+          }
+        },
+        methods: {
+          setCurrentTime() {
+            this.currentTime = new Date().toLocaleTimeString()
+          },
+        },
+        created() {
+          setInterval(() => {
+            this.setCurrentTime()
+          }, 1000)
+        },
+      })
       app.mount('#app')
     </script>
   </body>

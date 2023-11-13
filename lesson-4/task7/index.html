@@ -8,10 +8,44 @@
     <title>Document</title>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div>
+        <label>
+          Назва товару:
+          <input type="text" v-model="product.title" />
+        </label>
+      </div>
+      <div>
+        <label>
+          Ціна товару:
+          <input type="number" v-model="product.price" />
+        </label>
+      </div>
+      <button @click="saveData">Зберегти данні</button>
+    </div>
     <script>
       const { createApp } = Vue
-      createApp({}).mount('#app')
+      createApp({
+        data() {
+          return {
+            product: {
+              title: null,
+              price: null,
+            },
+          }
+        },
+        methods: {
+          saveData() {
+            localStorage.setItem('product', JSON.stringify(this.product))
+          },
+          loadData() {
+            if (localStorage.getItem('product')) this.product = JSON.parse(localStorage.getItem('product'))
+          },
+        },
+        mounted() {
+          this.loadData()
+        },
+      }).mount('#app')
     </script>
   </body>
 </html>

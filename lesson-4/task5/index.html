@@ -9,10 +9,38 @@
     <style></style>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <div v-if="isLoading">... Завантаження ...</div>
+      <div v-else v-for="item in resData">
+        <hr />
+        <h1>{{ item.attributes.titles.en }}</h1>
+        <img :src="item.attributes.posterImage.medium" />
+        <div>{{item.attributes.description}}</div>
+      </div>
+    </div>
     <script>
       const { createApp } = Vue
-      const app = createApp({})
+      const app = createApp({
+        data() {
+          return {
+            resData: null,
+            isLoading: true,
+          }
+        },
+        methods: {
+          loadData() {
+            fetch('https://kitsu.io/api/edge/anime?page[limit]=5&page[offset]=0')
+              .then((response) => response.json())
+              .then((resData) => {
+                this.resData = resData.data
+                this.isLoading = false
+              })
+          },
+        },
+        created() {
+          this.loadData()
+        },
+      })
       app.mount('#app')
     </script>
   </body>
